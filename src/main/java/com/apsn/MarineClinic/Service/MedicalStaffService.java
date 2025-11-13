@@ -54,7 +54,7 @@ public class MedicalStaffService {
         Optional<MedicalStaff> optional= medicalStaffRepository.findById(id);
         if(optional.isPresent()) {
             Role role=roleRepository.findById(input.role_Id()).orElseThrow(RuntimeException::new);
-            MedicalStaff entity=new MedicalStaff();
+            MedicalStaff entity=optional.get();
             entity.setName(input.name());
             entity.setEmail(input.email());
             entity.setPhone(input.phone());

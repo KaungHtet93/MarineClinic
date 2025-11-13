@@ -25,7 +25,8 @@ public class UserTypeService {
     public UserType updateUser(Long id,UserType input){
         Optional<UserType> optional=repository.findById(id);
         if(optional.isPresent()) {
-            return repository.save(input);
+            UserType type=optional.get();
+            return repository.save(type);
         } else throw new RuntimeException("User not found");
     }
 }

@@ -30,7 +30,9 @@ public class RoleService {
     public Role updateRole(Long id,Role input){
         Optional<Role> optional=repository.findById(id);
         if(optional.isPresent()) {
-            return repository.save(input);
+            Role role= optional.get();
+            role.setName(input.getName());
+            return repository.save(role);
         } else throw new RuntimeException("Role not found");
     }
 }

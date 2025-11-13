@@ -37,7 +37,7 @@ public class DiseaseService {
     public DiseaseResponse updateDisease(Long id, DiseaseInput input){
         Optional<Disease> optional=repository.findById(id);
         if(optional.isPresent()) {
-            Disease disease1=new Disease();
+            Disease disease1=optional.get();
             disease1.setName(input.name());
             return  mapper.toDiseaseResponse(repository.save(disease1));
         } else throw new RuntimeException("Disease not found");

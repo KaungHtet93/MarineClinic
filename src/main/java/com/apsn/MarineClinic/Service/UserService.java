@@ -33,7 +33,8 @@ public class UserService {
     public UserResponse updateUser(Long id,User input){
         Optional<User> optional=repository.findById(id);
         if(optional.isPresent()) {
-             repository.save(input);
+            User user= optional.get();
+             repository.save(user);
              return mapper.toUserResponse(input);
         } else throw new RuntimeException("User not found");
     }
