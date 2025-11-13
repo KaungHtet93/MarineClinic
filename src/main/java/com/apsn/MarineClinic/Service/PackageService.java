@@ -34,7 +34,7 @@ public class PackageService {
         PackageEntity packageEntity=new PackageEntity();
         packageEntity.setName(input.name());
         packageEntity.setPrice(input.price());
-        packageEntity.setDiseaseList(diseaseRepository.findAllById(input.diseaseId()));
+        packageEntity.setDiseaseList(diseaseRepository.findAllById(input.disease_Id()));
         return mapper.toPackageResponse(packageRepository.save(packageEntity));
     }
     public List<PackageResponse> findPackageByName(String name){
@@ -46,7 +46,7 @@ public class PackageService {
             PackageEntity entity=optional.get();
             entity.setName(input.name());
             entity.setPrice(input.price());
-            entity.setDiseaseList(diseaseRepository.findAllById(input.diseaseId()));
+            entity.setDiseaseList(diseaseRepository.findAllById(input.disease_Id()));
             packageRepository.save(entity);
             return  mapper.toPackageResponse(entity);
         } else throw new RuntimeException("Package not found");

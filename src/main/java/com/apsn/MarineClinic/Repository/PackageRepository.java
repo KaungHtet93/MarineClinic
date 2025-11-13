@@ -14,6 +14,6 @@ public interface PackageRepository extends JpaRepository<PackageEntity ,Long> {
     @Query("SELECT d FROM PackageEntity d WHERE LOWER(d.name) LIKE LOWER(CONCAT('%',:name,'%'))")
     List<PackageEntity> findByName(@Param("name") String name);
 
-    @Query("SELECT p FROM PackageEntity p JOIN p.diseaseList d WHERE d.diseaseId= :diseaseId")
+    @Query("SELECT p FROM PackageEntity p JOIN p.diseaseList d WHERE d.disease_Id= :diseaseId")
     List<PackageEntity> findPackagesByDiseaseId(@Param("diseaseId") Long id);
 }

@@ -15,8 +15,11 @@ import java.time.LocalDateTime;
 public class Voucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long voucherId;
-    private Long packageId;
+
+    private Long voucher_Id;
+    @ManyToOne
+    @JoinColumn(name = "package_id")
+    private PackageEntity aPackage;
 
     private String cashierName;
 

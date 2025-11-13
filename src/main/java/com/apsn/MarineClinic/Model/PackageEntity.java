@@ -13,7 +13,8 @@ import java.util.List;
 public class PackageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long packageId;
+
+    private Long package_Id;
 
     private String name;
     private Double price;

@@ -18,7 +18,8 @@ import java.util.List;
 public class Disease {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long diseaseId;
+
+    private Long disease_Id;
     private String name;
     @ManyToMany
     List<PackageEntity> packageList;

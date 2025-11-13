@@ -14,7 +14,8 @@ import java.util.List;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long companyId;
+
+    private Long company_Id;
     private String name;
     private String email;
     private String address;

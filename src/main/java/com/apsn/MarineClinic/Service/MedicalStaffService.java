@@ -35,7 +35,7 @@ public class MedicalStaffService {
         return mapper.toMedicalStaffResponse(medicalStaffRepository.findById(id).orElseThrow(RuntimeException::new));
     }
     public MedicalStaffResponse saveMedicalStaff(MedicalStaffInput input){
-        Role role=roleRepository.findById(input.roleId()).orElseThrow(RuntimeException::new);
+        Role role=roleRepository.findById(input.role_Id()).orElseThrow(RuntimeException::new);
         MedicalStaff entity=new MedicalStaff();
         entity.setName(input.name());
         entity.setEmail(input.email());
@@ -43,7 +43,7 @@ public class MedicalStaffService {
         entity.setRole(role);
         entity.setSpecialization(input.specialization());
         entity.setQualification(input.qualification());
-        entity.setDiseaseList(diseaseRepository.findAllById(input.diseaseId()));
+        entity.setDiseaseList(diseaseRepository.findAllById(input.disease_Id()));
         medicalStaffRepository.save(entity);
         return mapper.toMedicalStaffResponse(entity);
     }
@@ -53,7 +53,7 @@ public class MedicalStaffService {
     public MedicalStaffResponse updateMedicalStaff(Long id,MedicalStaffInput input){
         Optional<MedicalStaff> optional= medicalStaffRepository.findById(id);
         if(optional.isPresent()) {
-            Role role=roleRepository.findById(input.roleId()).orElseThrow(RuntimeException::new);
+            Role role=roleRepository.findById(input.role_Id()).orElseThrow(RuntimeException::new);
             MedicalStaff entity=new MedicalStaff();
             entity.setName(input.name());
             entity.setEmail(input.email());
@@ -61,7 +61,7 @@ public class MedicalStaffService {
             entity.setRole(role);
             entity.setSpecialization(input.specialization());
             entity.setQualification(input.qualification());
-            entity.setDiseaseList(diseaseRepository.findAllById(input.diseaseId()));
+            entity.setDiseaseList(diseaseRepository.findAllById(input.disease_Id()));
             return mapper.toMedicalStaffResponse(entity);
         } else throw new RuntimeException("Staff not found");
     }

@@ -15,7 +15,8 @@ import java.util.List;
 public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userTypeId;
+
+    private Long userType_Id;
 
     @Column(length = 50)
     private String userTypeName;

@@ -17,7 +17,8 @@ import java.util.List;
 public class MedicalStaff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long medicalStaffId ;
+
+    private Long medicalStaff_Id ;
     private String name;
     private String email;
     private String phone;
@@ -29,8 +30,8 @@ public class MedicalStaff {
     @ManyToMany
     @JoinTable(
             name = "medicalstaffdisease",
-            joinColumns = @JoinColumn(name = "medicalStaffid"),
-            inverseJoinColumns = @JoinColumn(name = "diseaseId")
+            joinColumns = @JoinColumn(name = "medicalStaff_id"),
+            inverseJoinColumns = @JoinColumn(name = "disease_Id")
     )
     List<Disease> diseaseList;
 }

@@ -6,17 +6,18 @@ import com.apsn.MarineClinic.dto.Input.DiseaseInput;
 import com.apsn.MarineClinic.dto.Input.PackageInput;
 import com.apsn.MarineClinic.dto.response.DiseaseResponse;
 import com.apsn.MarineClinic.dto.response.PackageResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
 @RequestMapping("/disease")
-
+@RestController
 public class DiseaseController {
+    @Autowired
     private DiseaseService service;
-    @PostMapping("/save")
+    @PostMapping
     public DiseaseResponse saveDisease(@RequestBody DiseaseInput input) {
         return service.saveDisease(input);
     }
@@ -31,11 +32,11 @@ public class DiseaseController {
         return service.getDiseaseById(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public DiseaseResponse updateDisease(@PathVariable Long id, @RequestBody DiseaseInput input) {
         return service.updateDisease(id, input);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public Boolean deleteDisease(@PathVariable Long id) {
         return service.deleteById(id);
     }

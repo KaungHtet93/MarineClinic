@@ -15,7 +15,8 @@ import java.util.List;
 public class Seaman {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seamanId;
+
+    private Long seaman_Id;
     private String CDCNo;
     private String name;
     private Date birthday;

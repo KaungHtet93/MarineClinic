@@ -23,6 +23,6 @@ public interface SeamanRepository extends JpaRepository<Seaman, Long> {
     );
     @Query("SELECT d FROM Seaman d WHERE LOWER(d.rankName) LIKE LOWER(CONCAT('%',:rankName,'%'))")
     List<Seaman> findByRank(@Param("rankName") String rank);
-    @Query("SELECT d From Seaman d join d.company s where s.companyId=:companyId")
+    @Query("SELECT d From Seaman d join d.company s where s.company_Id=:companyId")
     List<Seaman> findByCompanyId(@Param("companyId")Long id);
 }
