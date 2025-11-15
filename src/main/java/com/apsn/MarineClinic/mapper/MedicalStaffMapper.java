@@ -1,16 +1,15 @@
 package com.apsn.MarineClinic.mapper;
 
-import com.apsn.MarineClinic.Model.Disease;
 import com.apsn.MarineClinic.Model.MedicalStaff;
-import com.apsn.MarineClinic.dto.response.DiseaseResponse;
 import com.apsn.MarineClinic.dto.response.MedicalStaffResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MedicalStaffMapper {
-    List<MedicalStaff> toMedicalStaffList(List<DiseaseResponse> response);
     List<MedicalStaffResponse> toMedicalResponseList(List<MedicalStaff> staff);
-    MedicalStaff toMedicalStaff(MedicalStaffResponse response);
+    @Mapping(source = "medicalStaff_Id", target = "medicalStaff_Id")
+    @Mapping(source = "diseaseList", target = "response")
     MedicalStaffResponse toMedicalStaffResponse(MedicalStaff staff);
 }

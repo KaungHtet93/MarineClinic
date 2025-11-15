@@ -1,6 +1,5 @@
 package com.apsn.MarineClinic.Repository;
 
-import com.apsn.MarineClinic.Model.Disease;
 import com.apsn.MarineClinic.Model.MedicalStaff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +14,12 @@ public interface MedicalStaffRepository extends JpaRepository<MedicalStaff,Long>
     List<MedicalStaff> findByName(@Param("name") String name);
     @Query("SELECT d FROM MedicalStaff d WHERE LOWER(d.qualification) LIKE LOWER(CONCAT('%',:qualification,'%'))")
     List<MedicalStaff> findByQualification(@Param("qualification") String name);
-    @Query("SELECT d FROM MedicalStaff d join d.role where d.name Like Lower('doctor')")
+    @Query("SELECT d FROM MedicalStaff d join d.role v where v.name Like Lower('doctor')")
     List<MedicalStaff> findDoctor();
+    @Query("""
+       SELECT ms
+       FROM MedicalStaff ms
+       LEFT JOIN FETCH ms.diseaseList d
+       """)
+    List<MedicalStaff> getStaffWithDiseases();
 }

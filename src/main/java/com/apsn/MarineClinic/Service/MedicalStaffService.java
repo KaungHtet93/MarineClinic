@@ -1,8 +1,6 @@
 package com.apsn.MarineClinic.Service;
 
-import com.apsn.MarineClinic.Model.Disease;
 import com.apsn.MarineClinic.Model.MedicalStaff;
-import com.apsn.MarineClinic.Model.PackageEntity;
 import com.apsn.MarineClinic.Model.Role;
 import com.apsn.MarineClinic.Repository.DiseaseRepository;
 import com.apsn.MarineClinic.Repository.MedicalStaffRepository;
@@ -25,18 +23,22 @@ public class MedicalStaffService {
     @Autowired
     private RoleRepository roleRepository;
     private MedicalStaffMapper mapper;
-    public MedicalStaffService(MedicalStaffMapper mapper){
-        this.mapper=mapper;
+
+    public MedicalStaffService(MedicalStaffMapper mapper) {
+        this.mapper = mapper;
     }
-    public List<MedicalStaffResponse> getAllMedicalStaff(){
-        return mapper.toMedicalResponseList(medicalStaffRepository.findAll()) ;
+
+    public List<MedicalStaffResponse> getAll() {
+        return mapper.toMedicalResponseList(medicalStaffRepository.getStaffWithDiseases());
     }
-    public MedicalStaffResponse getMedicalStaffById(Long id){
-        return mapper.toMedicalStaffResponse(medicalStaffRepository.findById(id).orElseThrow(RuntimeException::new));
+
+    public MedicalStaffResponse getById(Long id) {
+        return mapper.toMedicalStaffResponse(medicalStaffRepository.findById(id).orElseThrow(()->new RuntimeException("Medical staff not found with id: " + id)));
     }
-    public MedicalStaffResponse saveMedicalStaff(MedicalStaffInput input){
-        Role role=roleRepository.findById(input.role_Id()).orElseThrow(RuntimeException::new);
-        MedicalStaff entity=new MedicalStaff();
+
+    public MedicalStaffResponse create(MedicalStaffInput input) {
+        Role role = roleRepository.findById(input.role_Id()).orElseThrow(()->new RuntimeException("Role not found with id: " + input.role_Id()));
+        MedicalStaff entity = new MedicalStaff();
         entity.setName(input.name());
         entity.setEmail(input.email());
         entity.setPhone(input.phone());
@@ -47,14 +49,12 @@ public class MedicalStaffService {
         medicalStaffRepository.save(entity);
         return mapper.toMedicalStaffResponse(entity);
     }
-    public List<MedicalStaffResponse> findStaffByName(String name){
-        return mapper.toMedicalResponseList(medicalStaffRepository.findByName(name)) ;
-    }
-    public MedicalStaffResponse updateMedicalStaff(Long id,MedicalStaffInput input){
-        Optional<MedicalStaff> optional= medicalStaffRepository.findById(id);
-        if(optional.isPresent()) {
-            Role role=roleRepository.findById(input.role_Id()).orElseThrow(RuntimeException::new);
-            MedicalStaff entity=optional.get();
+
+    public MedicalStaffResponse update(Long id, MedicalStaffInput input) {
+        Optional<MedicalStaff> optional = medicalStaffRepository.findById(id);
+        if (optional.isPresent()) {
+            Role role = roleRepository.findById(input.role_Id()).orElseThrow(()->new RuntimeException("Role not found with id: " + input.role_Id()));
+            MedicalStaff entity = optional.get();
             entity.setName(input.name());
             entity.setEmail(input.email());
             entity.setPhone(input.phone());
@@ -65,16 +65,20 @@ public class MedicalStaffService {
             return mapper.toMedicalStaffResponse(entity);
         } else throw new RuntimeException("Staff not found");
     }
-    public List<MedicalStaffResponse> findStaffByQualification(String name){
+
+    public List<MedicalStaffResponse> findByQualification(String name) {
         return mapper.toMedicalResponseList(medicalStaffRepository.findByQualification(name));
     }
-    public List<MedicalStaffResponse> findDoctor(){
-        return mapper.toMedicalResponseList(medicalStaffRepository.findDoctor()) ;
+
+    public List<MedicalStaffResponse> findDoctor() {
+        return mapper.toMedicalResponseList(medicalStaffRepository.findDoctor());
     }
-    public List<MedicalStaffResponse> getByName(String name){
-        return mapper.toMedicalResponseList(medicalStaffRepository.findByName(name)) ;
+
+    public List<MedicalStaffResponse> getByName(String name) {
+        return mapper.toMedicalResponseList(medicalStaffRepository.findByName(name));
     }
-    public boolean deleteById(Long id){
+
+    public boolean deleteById(Long id) {
         medicalStaffRepository.deleteById(id);
         return true;
     }

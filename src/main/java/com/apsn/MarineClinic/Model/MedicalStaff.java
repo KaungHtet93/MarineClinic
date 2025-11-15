@@ -25,13 +25,13 @@ public class MedicalStaff {
     private String specialization;
     private String qualification;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roleId")
+    @JoinColumn(name = "role_Id")
     private Role role;
     @ManyToMany
     @JoinTable(
-            name = "medicalstaffdisease",
-            joinColumns = @JoinColumn(name = "medicalStaff_id"),
-            inverseJoinColumns = @JoinColumn(name = "disease_Id")
+            name = "medicalstaff_disease",
+            joinColumns = @JoinColumn(name = "medicalstaff_id"),
+            inverseJoinColumns = @JoinColumn(name = "disease_id")
     )
     List<Disease> diseaseList;
 }

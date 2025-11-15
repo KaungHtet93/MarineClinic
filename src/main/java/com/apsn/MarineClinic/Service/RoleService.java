@@ -15,24 +15,30 @@ import java.util.Optional;
 public class RoleService {
     @Autowired
     private RoleRepository repository;
-    public List<Role> getAllRole(){
+
+    public List<Role> getAll() {
         return repository.findAll();
     }
-    public Optional<Role> getRoleById(Long id){
+
+    public Optional<Role> getById(Long id) {
         return repository.findById(id);
     }
-    public Role saveRole(Role input){
+
+    public Role create(Role input) {
         return repository.save(input);
     }
-    public List<Role> findRoleByName(String name){
+
+    public List<Role> findByName(String name) {
         return repository.findByName(name);
     }
-    public Role updateRole(Long id,Role input){
-        Optional<Role> optional=repository.findById(id);
-        if(optional.isPresent()) {
-            Role role= optional.get();
+
+    public Role update(Long id, Role input) {
+        Optional<Role> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Role role = optional.get();
             role.setName(input.getName());
             return repository.save(role);
         } else throw new RuntimeException("Role not found");
     }
+
 }

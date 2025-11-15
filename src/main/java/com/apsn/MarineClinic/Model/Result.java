@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,14 +20,14 @@ public class Result {
 
     private Long result_Id;
     @ManyToOne
-    @JoinColumn(name="packageId")
+    @JoinColumn(name="package_Id")
     private PackageEntity packageEntity;
-    private Date createDate;
-    private String Remark;
+    private LocalDate createdDate;
+    private String note;
     @ManyToOne
-    @JoinColumn(name="seamanId")
+    @JoinColumn(name="seaman_Id")
     private Seaman seaman;
     @ManyToOne
-    @JoinColumn(name="doctorId")
+    @JoinColumn(name="doctor_Id")
     private MedicalStaff staff;
 }

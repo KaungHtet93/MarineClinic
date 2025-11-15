@@ -23,9 +23,9 @@ public class PackageEntity {
     private List<Result> results;
     @ManyToMany
     @JoinTable(
-            name = "packagedisease",
-            joinColumns = @JoinColumn(name = "packageId"),
-            inverseJoinColumns = @JoinColumn(name = "diseaseId")
+            name = "package_disease",
+            joinColumns = @JoinColumn(name = "package_id"),
+            inverseJoinColumns = @JoinColumn(name = "disease_id")
     )
     List<Disease> diseaseList;
 }

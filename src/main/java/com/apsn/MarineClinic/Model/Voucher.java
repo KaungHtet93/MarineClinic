@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="voucher")
+@Table(name = "voucher")
 public class Voucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +20,8 @@ public class Voucher {
     @ManyToOne
     @JoinColumn(name = "package_id")
     private PackageEntity aPackage;
+    private String cashier_Name;
 
-    private String cashierName;
-
-    private String additionalName;
     private Double additionalFee;
     private Double totalAmount;
     private LocalDateTime dateTime;

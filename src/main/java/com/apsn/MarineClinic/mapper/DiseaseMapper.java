@@ -9,10 +9,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface DiseaseMapper {
-    //    List<Disease> toDiseaseList(List<DiseaseResponse> response);
     List<DiseaseResponse> toDiseaseResponseList(List<Disease> disease);
-
-    //    Disease toDisease(DiseaseResponse response);
     @Mapping(source = "disease_Id", target = "disease_Id")
+    @Mapping(source = "name", target = "name")
     DiseaseResponse toDiseaseResponse(Disease disease);
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "seamanprofile")
+@Table(name = "seaman")
 @Getter
 @Setter
 
@@ -22,8 +22,7 @@ public class Seaman {
     private Date birthday;
     private String address;
     private String nationality;
-    private String rankName;
-    private Date visitedDate;
+    private String rank_Name;
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

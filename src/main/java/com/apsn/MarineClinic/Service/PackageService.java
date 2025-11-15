@@ -1,6 +1,5 @@
 package com.apsn.MarineClinic.Service;
 
-import com.apsn.MarineClinic.Model.Disease;
 import com.apsn.MarineClinic.Model.PackageEntity;
 
 import com.apsn.MarineClinic.Repository.DiseaseRepository;
@@ -21,37 +20,44 @@ public class PackageService {
     @Autowired
     private DiseaseRepository diseaseRepository;
     private PackageMapper mapper;
-    public PackageService(PackageMapper mapper){
-        this.mapper=mapper;
+
+    public PackageService(PackageMapper mapper) {
+        this.mapper = mapper;
     }
-    public List<PackageResponse> getAllPackage(){
+
+    public List<PackageResponse> getAll() {
         return mapper.toPackageResponseList(packageRepository.findAll());
     }
-    public PackageResponse getPackageById(Long id){
-        return mapper.toPackageResponse(packageRepository.findById(id).orElseThrow(RuntimeException::new));
+
+    public PackageResponse getById(Long id) {
+        return mapper.toPackageResponse(packageRepository.findById(id).orElseThrow(()->new RuntimeException("Role not found with id: " + id)));
     }
-    public PackageResponse savePackage(PackageInput input){
-        PackageEntity packageEntity=new PackageEntity();
+
+    public PackageResponse create(PackageInput input) {
+        PackageEntity packageEntity = new PackageEntity();
         packageEntity.setName(input.name());
         packageEntity.setPrice(input.price());
         packageEntity.setDiseaseList(diseaseRepository.findAllById(input.disease_Id()));
         return mapper.toPackageResponse(packageRepository.save(packageEntity));
     }
-    public List<PackageResponse> findPackageByName(String name){
-        return mapper.toPackageResponseList(packageRepository.findByName(name)) ;
+
+    public List<PackageResponse> findByName(String name) {
+        return mapper.toPackageResponseList(packageRepository.findByName(name));
     }
-    public PackageResponse updatePackage(Long id, PackageInput input){
-        Optional<PackageEntity> optional= packageRepository.findById(id);
-        if(optional.isPresent()) {
-            PackageEntity entity=optional.get();
+
+    public PackageResponse update(Long id, PackageInput input) {
+        Optional<PackageEntity> optional = packageRepository.findById(id);
+        if (optional.isPresent()) {
+            PackageEntity entity = optional.get();
             entity.setName(input.name());
             entity.setPrice(input.price());
             entity.setDiseaseList(diseaseRepository.findAllById(input.disease_Id()));
             packageRepository.save(entity);
-            return  mapper.toPackageResponse(entity);
+            return mapper.toPackageResponse(entity);
         } else throw new RuntimeException("Package not found");
     }
-    public List<PackageResponse> getPackageByDisease(Long id){
+
+    public List<PackageResponse> findByDisease(Long id) {
         return mapper.toPackageResponseList(packageRepository.findPackagesByDiseaseId(id));
     }
 

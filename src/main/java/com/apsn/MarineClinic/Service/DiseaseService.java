@@ -20,21 +20,21 @@ public class DiseaseService {
         this.mapper=mapper;
     }
 
-    public List<DiseaseResponse> getAllDisease(){
+    public List<DiseaseResponse> getAll(){
         return mapper.toDiseaseResponseList(repository.findAll()) ;
     }
     public DiseaseResponse getDiseaseById(Long id){
-        return mapper.toDiseaseResponse(repository.findById(id).orElseThrow(RuntimeException::new));
+        return mapper.toDiseaseResponse(repository.findById(id).orElseThrow(()->new RuntimeException("Disease not found with id: " + id)));
     }
-    public DiseaseResponse saveDisease(DiseaseInput input){
+    public DiseaseResponse save(DiseaseInput input){
         Disease disease=new Disease();
         disease.setName(input.name());
         return  mapper.toDiseaseResponse(repository.save(disease));
     }
-    public List<DiseaseResponse> findDiseaseByName(String name){
+    public List<DiseaseResponse> getByName(String name){
         return mapper.toDiseaseResponseList(repository.findByName(name));
     }
-    public DiseaseResponse updateDisease(Long id, DiseaseInput input){
+    public DiseaseResponse update(Long id, DiseaseInput input){
         Optional<Disease> optional=repository.findById(id);
         if(optional.isPresent()) {
             Disease disease1=optional.get();
@@ -42,7 +42,7 @@ public class DiseaseService {
             return  mapper.toDiseaseResponse(repository.save(disease1));
         } else throw new RuntimeException("Disease not found");
     }
-
+//    @Transactional
     public Boolean deleteById(Long id) {
         repository.deleteById(id);
         return true;

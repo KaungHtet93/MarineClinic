@@ -2,10 +2,8 @@ package com.apsn.MarineClinic.Controllers;
 
 import com.apsn.MarineClinic.Service.MedicalStaffService;
 import com.apsn.MarineClinic.dto.Input.MedicalStaffInput;
-import com.apsn.MarineClinic.dto.Input.PackageInput;
 import com.apsn.MarineClinic.dto.response.MedicalStaffResponse;
-import com.apsn.MarineClinic.dto.response.PackageResponse;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,25 +11,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/staff")
 public class StaffController {
+    @Autowired
+
     private MedicalStaffService service;
-    @PostMapping("/save")
+    @PostMapping
     public MedicalStaffResponse saveStaff(@RequestBody MedicalStaffInput input) {
-        return service.saveMedicalStaff(input);
+        return service.create(input);
     }
 
     @GetMapping("/list")
     public List<MedicalStaffResponse> getAllPackage() {
-        return service.getAllMedicalStaff();
+        return service.getAll();
     }
 
     @GetMapping("{id}")
     public MedicalStaffResponse findById(@PathVariable(value = "id") Long id) {
-        return service.getMedicalStaffById(id);
+        return service.getById(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public MedicalStaffResponse updateMedical(@PathVariable Long id, @RequestBody MedicalStaffInput input) {
-        return service.updateMedicalStaff(id, input);
+        return service.update(id, input);
     }
 
     @GetMapping("/searchName")
@@ -44,7 +44,7 @@ public class StaffController {
     }
     @GetMapping("/searchQualification")
     public List<MedicalStaffResponse> getStaffByQualification(@RequestParam(value = "qualification") String qualification) {
-        return service.findStaffByQualification(qualification);
+        return service.findByQualification(qualification);
     }
 
     @DeleteMapping("/delete/{id}")

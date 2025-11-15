@@ -1,13 +1,9 @@
 package com.apsn.MarineClinic.Controllers;
 
-import com.apsn.MarineClinic.Repository.DiseaseRepository;
 import com.apsn.MarineClinic.Service.DiseaseService;
 import com.apsn.MarineClinic.dto.Input.DiseaseInput;
-import com.apsn.MarineClinic.dto.Input.PackageInput;
 import com.apsn.MarineClinic.dto.response.DiseaseResponse;
-import com.apsn.MarineClinic.dto.response.PackageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +14,13 @@ public class DiseaseController {
     @Autowired
     private DiseaseService service;
     @PostMapping
-    public DiseaseResponse saveDisease(@RequestBody DiseaseInput input) {
-        return service.saveDisease(input);
+    public DiseaseResponse save(@RequestBody DiseaseInput input) {
+        return service.save(input);
     }
 
     @GetMapping("/list")
-    public List<DiseaseResponse> getAllDisease() {
-        return service.getAllDisease();
+    public List<DiseaseResponse> getAll() {
+        return service.getAll();
     }
 
     @GetMapping("{id}")
@@ -33,16 +29,16 @@ public class DiseaseController {
     }
 
     @PutMapping("{id}")
-    public DiseaseResponse updateDisease(@PathVariable Long id, @RequestBody DiseaseInput input) {
-        return service.updateDisease(id, input);
+    public DiseaseResponse update(@PathVariable Long id, @RequestBody DiseaseInput input) {
+        return service.update(id, input);
     }
     @DeleteMapping("{id}")
-    public Boolean deleteDisease(@PathVariable Long id) {
+    public Boolean delete(@PathVariable Long id) {
         return service.deleteById(id);
     }
 
     @GetMapping("/search")
-    public List<DiseaseResponse> getDiseaseByName(@RequestParam(value = "name") String name) {
-        return service.findDiseaseByName(name);
+    public List<DiseaseResponse> getByName(@RequestParam(value = "name") String name) {
+        return service.getByName(name);
     }
 }

@@ -21,8 +21,9 @@ public class Disease {
 
     private Long disease_Id;
     private String name;
-    @ManyToMany
-    List<PackageEntity> packageList;
-    @ManyToMany
-    List<MedicalStaff> staffList;
+    @ManyToMany(mappedBy = "diseaseList")
+    private List<PackageEntity> packageList;
+
+    @ManyToMany(mappedBy = "diseaseList")
+    private List<MedicalStaff> staffList;
 }

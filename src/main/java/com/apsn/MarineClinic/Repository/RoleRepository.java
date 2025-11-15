@@ -1,6 +1,5 @@
 package com.apsn.MarineClinic.Repository;
 
-import com.apsn.MarineClinic.Model.Disease;
 import com.apsn.MarineClinic.Model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,53 +1,56 @@
 package com.apsn.MarineClinic.Controllers;
 
-import com.apsn.MarineClinic.Model.PackageEntity;
 import com.apsn.MarineClinic.Service.PackageService;
 import com.apsn.MarineClinic.dto.Input.PackageInput;
 import com.apsn.MarineClinic.dto.response.PackageResponse;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/package")
 public class PackageController {
+    @Autowired
     private PackageService service;
-    @PostMapping("/save")
-    public PackageResponse savePackage(@RequestBody PackageInput input) {
-        return service.savePackage(input);
+
+    @PostMapping
+    public PackageResponse save(@RequestBody PackageInput input) {
+        return service.create(input);
     }
 
     @GetMapping("/list")
-    public List<PackageResponse> getAllPackage() {
-        return service.getAllPackage();
+    public List<PackageResponse> getAll() {
+        return service.getAll();
     }
 
     @GetMapping("{id}")
     public PackageResponse findById(@PathVariable(value = "id") Long id) {
-        return service.getPackageById(id);
+        return service.getById(id);
     }
 
-    @PutMapping("/update/{id}")
-    public PackageResponse updatePackage(@PathVariable Long id, @RequestBody PackageInput input) {
-        return service.updatePackage(id, input);
+    @PutMapping("{id}")
+    public PackageResponse update(@PathVariable Long id, @RequestBody PackageInput input) {
+        return service.update(id, input);
     }
-    @DeleteMapping("/delete/{id}")
-    public Boolean deleteCategory(@PathVariable Long id) {
+
+    @DeleteMapping("{id}")
+    public Boolean delete(@PathVariable Long id) {
         return service.deleteById(id);
     }
 
     @GetMapping("/search")
-    public List<PackageResponse> getCategoryByName(@RequestParam(value = "name") String name) {
-        return service.findPackageByName(name);
-    }
-
-
-    @GetMapping("{diseaseId}")
-    public List<PackageResponse> getPackageByDisease(@PathVariable Long id){
-        return service.getPackageByDisease(id);
+    public List<PackageResponse> searchPackages(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "diseaseId", required = false) Long diseaseId) {
+        if (name != null) {
+            return service.findByName(name);
+        } else if (diseaseId != null) {
+            return service.findByDisease(diseaseId);
+        } else {
+            return service.getAll(); // fallback if no filters provided
+        }
     }
 }
