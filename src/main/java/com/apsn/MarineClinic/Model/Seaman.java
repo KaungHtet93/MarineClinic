@@ -21,6 +21,7 @@ public class Seaman {
     private String name;
     private Date birthday;
     private String address;
+    private String phone;
     private String nationality;
     private String rank_Name;
     @ManyToOne

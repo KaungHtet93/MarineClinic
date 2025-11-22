@@ -58,7 +58,7 @@ public class ResultService {
         Seaman seaman = seamanRepository.findById(input.seaman_Id()).orElseThrow(()->new RuntimeException("Seaman not found with id: " + input.seaman_Id()));
         MedicalStaff staff = medicalStaffRepository.findById(input.doctor_Id()).orElseThrow(()->new RuntimeException("Doctor not found with id: " + input.doctor_Id()));
         Result result = new Result();
-        result.setNote(input.notes());
+        result.setNote(input.note());
         result.setCreatedDate(input.createDate());
         result.setStaff(staff);
         result.setSeaman(seaman);
@@ -75,7 +75,7 @@ public class ResultService {
             Seaman seaman = seamanRepository.findById(input.seaman_Id()).orElseThrow(()->new RuntimeException("Seaman not found with id: " + input.seaman_Id()));
             MedicalStaff staff = medicalStaffRepository.findById(input.doctor_Id()).orElseThrow(()->new RuntimeException("Doctor not found with id: " + input.doctor_Id()));
             Result result = optional.get();
-            result.setNote(input.notes());
+            result.setNote(input.note());
             result.setCreatedDate(input.createDate());
             result.setStaff(staff);
             result.setSeaman(seaman);

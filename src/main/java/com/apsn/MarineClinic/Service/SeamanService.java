@@ -36,6 +36,7 @@ public class SeamanService {
         entity.setAddress(input.address());
         entity.setCDCNo(input.CDCNo());
         entity.setBirthday(input.birthday());
+        entity.setPhone(input.phone());
         entity.setNationality(input.nationality());
         entity.setRank_Name(input.rankName());
         entity.setCompany(company);
@@ -54,6 +55,7 @@ public class SeamanService {
             entity.setAddress(input.address());
             entity.setCDCNo(input.CDCNo());
             entity.setBirthday(input.birthday());
+            entity.setPhone(input.phone());
             entity.setNationality(input.nationality());
             entity.setRank_Name(input.rankName());
             entity.setCompany(company);

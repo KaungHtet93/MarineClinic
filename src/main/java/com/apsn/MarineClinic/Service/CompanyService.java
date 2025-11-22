@@ -33,6 +33,7 @@ public class CompanyService {
     public CompanyResponse create(CompanyInput input){
         Company entity=new Company();
         entity.setName(input.name());
+        entity.setPhone(input.phone());
         entity.setEmail(input.email());
         entity.setAddress(input.address());
         repository.save(entity);
@@ -45,6 +46,7 @@ public class CompanyService {
             Company entity=optional.get();
             entity.setName(input.name());
             entity.setEmail(input.email());
+            entity.setPhone(input.phone());
             entity.setAddress(input.address());
             repository.save(entity);
             return mapper.toCompanyResponse(entity);

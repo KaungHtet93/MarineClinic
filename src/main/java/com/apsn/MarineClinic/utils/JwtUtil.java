@@ -32,7 +32,7 @@ public class JwtUtil {
 
     public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(getSignKey())        // ✔ correct for jjwt 0.12
+                .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -48,16 +48,11 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
-
-        String role = userDetails.getAuthorities()
-                .iterator().next().getAuthority();
-
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())   // ✔ correct method name
-                .claim("role", role)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(getSignKey())               // ✔ correct for jjwt 0.12
+                .signWith(getSignKey())
                 .compact();
     }
 }

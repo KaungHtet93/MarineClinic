@@ -13,6 +13,7 @@ public interface VoucherMapper {
 
     // Map the seaman object to seamanNameResponse
     @Mapping(source = "seaman", target = "seamanNameResponse")
+    @Mapping(source = "APackage", target = "packageNameResponse")
     VoucherResponse toVoucherResponse(Voucher voucher);
 
     List<VoucherResponse> toVoucherResponseList(List<Voucher> vouchers);

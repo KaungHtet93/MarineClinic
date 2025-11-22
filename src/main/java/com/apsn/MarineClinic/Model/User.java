@@ -22,11 +22,9 @@ public class User {
 
     @Column(length = 255)
     private String password;
-
+    @Column( updatable = false)
     private LocalDateTime createdAt;
+    @Column(insertable = false, updatable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "userTypeId")
-    private UserType userType;
 }

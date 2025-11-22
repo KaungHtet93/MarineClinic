@@ -18,6 +18,7 @@ public class Company {
     private Long company_Id;
     private String name;
     private String email;
+    private String phone;
     private String address;
     @OneToMany(mappedBy = "company")
     private List<Seaman> seaman;

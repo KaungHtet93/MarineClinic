@@ -28,30 +28,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.csrf(csrf -> csrf.disable())
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(request -> {
+                    var corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                    corsConfig.setAllowedOrigins(java.util.List.of("http://localhost:4200"));
+                    corsConfig.setAllowedMethods(java.util.List.of("GET","POST","PUT","DELETE","OPTIONS"));
+                    corsConfig.setAllowedHeaders(java.util.List.of("*"));
+                    corsConfig.setAllowCredentials(true);
+                    return corsConfig;
+                }))
                 .authorizeHttpRequests(auth -> auth
-
-                        // Public
-                        .requestMatchers("/auth/**").permitAll()
-
-                        // USER permissions
-                        // Allow USER to read (GET) all endpoints
-                        .requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN")
-
-                        // Allow USER full CRUD  on /seaman/** and company
-                        .requestMatchers("/seaman/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/company/**").hasAnyRole("USER", "ADMIN")
-
-                        // ADMIN-only endpoints
-                        .requestMatchers("/results/**").hasRole("ADMIN")
-
-                        .requestMatchers("/staff/**").hasRole("ADMIN")
-                        .requestMatchers("/voucher/**").hasRole("ADMIN")
-                        .requestMatchers("/disease/**").hasRole("ADMIN")
-                        .requestMatchers("/package/**").hasRole("ADMIN")
-
-                        // everything else requires authentication
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // allow preflight requests
+                        .requestMatchers("/auth/**").permitAll()               // public endpoints
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess ->

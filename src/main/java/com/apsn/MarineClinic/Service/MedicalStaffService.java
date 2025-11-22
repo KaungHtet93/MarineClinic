@@ -62,6 +62,7 @@ public class MedicalStaffService {
             entity.setSpecialization(input.specialization());
             entity.setQualification(input.qualification());
             entity.setDiseaseList(diseaseRepository.findAllById(input.disease_Id()));
+            medicalStaffRepository.save(entity);
             return mapper.toMedicalStaffResponse(entity);
         } else throw new RuntimeException("Staff not found");
     }
