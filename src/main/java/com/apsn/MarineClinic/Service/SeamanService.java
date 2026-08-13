@@ -9,29 +9,54 @@ import com.apsn.MarineClinic.dto.response.SeamanResponse;
 import com.apsn.MarineClinic.mapper.SeamanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class SeamanService {
+    private static final String UPLOAD_DIR = "uploads/seaman/";
     @Autowired
     private SeamanRepository seamanRepository;
     @Autowired
     private CompanyRepository companyRepository;
     private SeamanMapper mapper;
-    public SeamanService(SeamanMapper mapper){
-        this.mapper=mapper;
+
+    public SeamanService(SeamanMapper mapper) {
+        this.mapper = mapper;
     }
-    public List<SeamanResponse> getAll(){
-        return mapper.toSeamanResponseList(seamanRepository.findAll()) ;
+
+    public List<SeamanResponse> getAll() {
+        return mapper.toSeamanResponseList(seamanRepository.findAll());
     }
-    public SeamanResponse getById(Long id){
+
+    public SeamanResponse getById(Long id) {
         return mapper.toSeamanResponse(seamanRepository.findById(id).orElseThrow(RuntimeException::new));
     }
+
+    public List<SeamanResponse> getByName(String name) {
+        return mapper.toSeamanResponseList(seamanRepository.findByName(name));
+    }
+
+    public List<SeamanResponse> getByCDCNo(String Cdcno) {
+        return mapper.toSeamanResponseList(seamanRepository.findByCDCNo(Cdcno));
+    }
+
+    public List<SeamanResponse> getByCompany(Long id) {
+        return mapper.toSeamanResponseList(seamanRepository.findByCompanyId(id));
+    }
+
+    public List<SeamanResponse> getByRank(String rank) {
+        return mapper.toSeamanResponseList(seamanRepository.findByRank(rank));
+    }
+
     public SeamanResponse save(SeamanInput input){
-        Company company=companyRepository.findById(input.company_Id()).orElseThrow(RuntimeException::new);
-        Seaman entity=new Seaman();
+        Company company = companyRepository.findById(input.company_Id()).orElseThrow(RuntimeException::new);
+        Seaman entity = new Seaman();
         entity.setName(input.name());
         entity.setAddress(input.address());
         entity.setCDCNo(input.CDCNo());
@@ -43,14 +68,11 @@ public class SeamanService {
         seamanRepository.save(entity);
         return mapper.toSeamanResponse(entity);
     }
-    public List<SeamanResponse> findByName(String name){
-        return mapper.toSeamanResponseList(seamanRepository.findByName(name)) ;
-    }
-    public SeamanResponse update(Long id,SeamanInput input){
-        Optional<Seaman> optional= seamanRepository.findById(id);
-        if(optional.isPresent()) {
-            Company company=companyRepository.findById(input.company_Id()).orElseThrow(RuntimeException::new);
-            Seaman entity=optional.get();
+    public SeamanResponse update(Long id, SeamanInput input) throws Exception{
+        Optional<Seaman> optional = seamanRepository.findById(id);
+        if (optional.isPresent()) {
+            Company company = companyRepository.findById(input.company_Id()).orElseThrow(RuntimeException::new);
+            Seaman entity = optional.get();
             entity.setName(input.name());
             entity.setAddress(input.address());
             entity.setCDCNo(input.CDCNo());
@@ -63,19 +85,8 @@ public class SeamanService {
             return mapper.toSeamanResponse(entity);
         } else throw new RuntimeException("Seaman not found");
     }
-    public List<SeamanResponse> getByName(String name){
-        return mapper.toSeamanResponseList(seamanRepository.findByName(name)) ;
-    }
-    public List<SeamanResponse> getByCDCNo(String Cdcno){
-        return mapper.toSeamanResponseList(seamanRepository.findByCDCNo(Cdcno)) ;
-    }
-    public List<SeamanResponse> getByCompany(Long id){
-        return mapper.toSeamanResponseList(seamanRepository.findByCompanyId(id)) ;
-    }
-    public List<SeamanResponse> getByRank(String rank){
-        return mapper.toSeamanResponseList(seamanRepository.findByRank(rank));
-    }
-    public boolean deleteById(Long id){
+
+    public boolean deleteById(Long id) {
         seamanRepository.deleteById(id);
         return true;
     }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface SeamanMapper {
     List<SeamanResponse> toSeamanResponseList(List<Seaman> seamanList);
     @Mapping(source = "seaman_Id", target = "seaman_Id")
-    @Mapping(source="rank_Name", target="rankName")
-    @Mapping(source="company", target="companyName")
+    @Mapping(source = "rank_Name", target = "rankName")
+    @Mapping(source = "company.name", target = "companyName") // map only the name string
     SeamanResponse toSeamanResponse(Seaman seaman);
 }

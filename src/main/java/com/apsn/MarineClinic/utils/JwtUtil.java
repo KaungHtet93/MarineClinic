@@ -48,11 +48,20 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
+
+        List<String> roles = userDetails.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+        System.out.println("HERE IN JWTUTIL" + roles.toString());
+        String primaryRole = roles.isEmpty() ? "ROLE_USER" : roles.get(0);
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
+                .claim("roles", roles)
+                .claim("role", primaryRole)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(getSignKey())
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 }

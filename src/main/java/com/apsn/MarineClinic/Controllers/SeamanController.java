@@ -6,10 +6,13 @@ import com.apsn.MarineClinic.dto.Input.SeamanInput;
 import com.apsn.MarineClinic.dto.response.CompanyResponse;
 import com.apsn.MarineClinic.dto.response.SeamanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
@@ -18,23 +21,27 @@ public class SeamanController {
     @Autowired
 
     private SeamanService service;
+
     @GetMapping("/list")
     public List<SeamanResponse> getAll() {
         return service.getAll();
     }
+
     @PostMapping
     public SeamanResponse create(@RequestBody SeamanInput input){
         return service.save(input);
     }
+
     @GetMapping("{id}")
     public SeamanResponse findById(@PathVariable(value = "id") Long id) {
         return service.getById(id);
     }
 
     @PutMapping("{id}")
-    public SeamanResponse update(@PathVariable Long id, @RequestBody SeamanInput input) {
-        return service.update(id, input);
+    public SeamanResponse update(@PathVariable Long id,@RequestBody SeamanInput input) throws Exception{
+        return service.update(id,input);
     }
+
     @DeleteMapping("{id}")
     public Boolean delete(@PathVariable Long id) {
         return service.deleteById(id);
@@ -51,6 +58,7 @@ public class SeamanController {
             default -> service.getByName(name);
         };
     }
+
     @GetMapping("/company/{id}")
     public List<SeamanResponse> getByCompanyId(@PathVariable Long id) {
         return service.getByCompany(id);
