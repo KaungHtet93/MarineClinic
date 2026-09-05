@@ -61,13 +61,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterInput req) {
-        String roleName = "ROLE_USER";//Default
-//        if ("ADMIN".equalsIgnoreCase(req.role())) {
-//            // Option 1: disable completely
-//            throw new RuntimeException("Admin role cannot be self-assigned");
-//
-//            // Option 2 (advanced): allow only if a secret key is provided
-//        }
+        String roleName = "ADMIN";
         UserRole role = userRoleRepository.findByName(roleName).orElseThrow(()->new RuntimeException("RoleNot found"));
         User user = new User();
         user.setName(req.name());
